@@ -1,0 +1,1 @@
+print("\'Beautiful is better than ugly.\' \n \"Explicit is better than implicit\" \n \\Simple is better than complex\\ \n \tComplex is better than complicated\t")
