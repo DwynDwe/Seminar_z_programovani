@@ -1,4 +1,5 @@
 from colorama import Fore as color
+import time
 
 stats = {
     'health' : 5,
@@ -50,14 +51,33 @@ def near_train_station():
         elif decision == 'východ' or decision == 'v' or decision == 'vychod':
             decision = None
             while decision == None:
-                decision = input(color.YELLOW + 'Nějaká konečná trolejbusu. A podchod. Kam teď? (podchod/konečná): ' + color.RESET)
+                decision = input(color.YELLOW + 'Nějaká konečná trolejbusu. A podchod. Kam teď? (podchod/konečná): ' + color.RESET).lower()
                 if decision == 'podchod' or decision == 'p':
-                    pass
+                    decision = None
+                    print(color.YELLOW + 'Temný místo. Patrioti tomu říkaj Myší díra. Vede většinou na nástupiště emhádéčka. Občas se tam někdo ztratí... Tak jdem.' + color.RESET)
+                    time.sleep(5)
+                    while decision == None:
+                        decision = input(color.YELLOW + 'Hele, skořápky! Pojď, zahrajem si! (ano/ne): ' + color.RESET).lower()
+                        if decision == 'ano' or decision == 'a':
+                            decision = None
+                            while decision == None:
+                                decision = input(color.BLUE + 'Skořápkář: ' + color.RESET + 'Zdarec kábre. Hra stojí tři pětky. Pokud uhodneš, dostaneš zpět dvojnásobek. (ano/ne): ').lower()
+                                if decision == 'ano' or decision == 'a':
+                                    pass
+                                elif decision == 'ne' or decision == 'n':
+                                    pass
+                                else:
+                                    decision = None
+                        elif decision == 'ne' or decision == 'n':
+                            pass
+                        else:
+                            decision = None
                 elif decision == 'konečná' or decision == 'k' or decision == 'k':
-                    pass
+                    print(color.YELLOW + 'Hmm. Trolejbus číslo 31. Někam za Brno. To raději riskovat nebudeme, co?' + color.RESET)
+                    decision = None
                 else:
                     decision = None
         else:
             decision = None
 
-start()
+near_train_station()
