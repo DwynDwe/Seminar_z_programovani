@@ -1,11 +1,13 @@
 from colorama import Fore as color
-from termcolor import RESET
 
 stats = {
     'health' : 5,
     'sanity' : 5,
     'money' : 100
 }
+
+def print_stats():
+    print('zdraví: ' + str(stats['health']) + '\npříčetnost: ' + str(stats['sanity']) + '\npeníze: ' + str(stats['money']))
 
 def start():
     decision = input(color.YELLOW + 'Vítej v Brně! Ve městě, kde je možné všechno. A že je to fakt drsný místo, dokládají i novinové titulky:\n' + color.BLUE + '25. července 2021:' + color.RESET + ' Muž v parku v Brně tvrdil, že je král a máchal okolo sebe šroubovákem\n' + color.BLUE + '27. června 2021: ' + color.RESET +'Muž v prodejně v Brně přelepil mixér a reproduktor cenovkami zeleniny\n' + color.BLUE + '18. března 2018: ' + color.RESET + 'Přijel z Chebu na návštěvu do Brna, útočník mu ukousl nos\n' + color.YELLOW + 'Ještě je čas utéct. Chceš určitě zůstat? (ano/ne): ' + color.RESET).lower()
@@ -24,12 +26,12 @@ def train_station():
     if decision == 'ano' or decision == 'a':
         print(color.BLUE + 'Bezdomovec: ' + color.RESET + 'Díky šéfe! Máte dobrý srdéčko\n\n' + color.YELLOW + 'Tak to proběhlo celkem hladce. Honem před budovu. Vypadá to, že se k tobě ženou další!\n'+ color.RESET)
         stats['money'] = stats['money'] - 20
-        print('zdraví: ' + str(stats['health']) + '\npříčetnost: ' + str(stats['sanity']) + '\npeníze: ' + str(stats['money']))
+        print_stats()
         near_train_station()
     else:
         print(color.BLUE + 'Bezdomovec: ' + color.RESET + 'Bleehhh\n\n' + color.YELLOW + 'Hehe. To jsi asi nečekal. Být hned po výstupu nahozenej bezdomovcem. To chceš. Běž radši rychle ven, než se stane něco dalšího.' + color.RESET)
         stats['sanity'] = stats['sanity'] - 2
-        print('zdraví: ' + str(stats['health']) + '\npříčetnost: ' + str(stats['sanity']) + '\npeníze: ' + str(stats['money']))
+        print_stats()
         near_train_station()
 
 def near_train_station():
@@ -58,4 +60,4 @@ def near_train_station():
         else:
             decision = None
 
-near_train_station()
+start()
