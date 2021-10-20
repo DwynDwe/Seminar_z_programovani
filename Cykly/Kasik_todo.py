@@ -1,3 +1,5 @@
+# NUTNÝ IMPORT KNIHOVNY COLORAMA -> pip install colorama
+
 from colorama import Fore as color
 import datetime
 
@@ -9,9 +11,9 @@ new_note = dict.fromkeys(new_note_keys)
 today = datetime.date.today()
 
 while True:
-    user_choice = int(input('Vyberte akci.\n1 = Vložit nový úkol\n2 = Zobrazit úkoly po deadlinu\n3 = Zobrazit všechny úkoly\n4 = Splnit poznámku\n5 = Ukončit zápisníček\nVýběr: '))
+    user_choice = int(input('\nVyberte akci.\n1 = Vložit nový úkol\n2 = Zobrazit úkoly po deadlinu\n3 = Zobrazit všechny úkoly\n4 = Splnit poznámku\n5 = Ukončit zápisníček\nVýběr: '))
     if user_choice == 1:
-        new_text = str(input("Text úkolu: "))
+        new_text = str(input("\nText úkolu: "))
         date_input = str(input('Zadejte deadline ve formátu DD-MM-RRRR: '))
         day, month, year = map(int, date_input.split('-'))
         new_deadline = datetime.date(year, month, day)
@@ -24,7 +26,7 @@ while True:
         missed_counter = False
         for i in list:
             if i['deadline'] < today and i['done'] == 0:
-                print('Nesplněné úkoly s proměškaným deadlinem:\n', i['deadline'], ' ', i['text'])
+                print('\nNesplněné úkoly s proměškaným deadlinem:\n' + color.RED, i['deadline'], color.RESET + ' ', i['text'])
                 missed_counter = True
         if missed_counter == False:
             print('Žádné zmeškané úkoly')
@@ -44,31 +46,29 @@ while True:
     elif user_choice == 4:
         while True:
             choice_counter = 0
-            run = 1 #je to potřeba?
             for i in list:
                 if i['done'] == 0:
                     choice_counter += 1
-                    run -= 1
                     if i['deadline'] > today:
                         print(str(choice_counter) + ' = ' + color.GREEN + str(i['deadline']) + color.RESET + ' ' + i['text'] + color.YELLOW + ' ' + 'NESPLĚNO' + color.RESET)
                     elif i['deadline'] < today:
                         print(str(choice_counter) + ' = ' + color.RED + str(i['deadline']) + color.RESET + ' ' + i['text'] + color.RED + ' ' + 'NESPLĚNO' + color.RESET)
-                elif choice_counter == 0 and run < 1:
+                elif choice_counter == 0:
                     print('Žádné úkoly ke splnění')
             if choice_counter != 0:
                 user_choice = int(input('Který úkol chcete označit za splněný? '))
-                if user_choice <= choice_counter:
+                if user_choice > choice_counter:
                     break
                 else:
-                    counter_done = 1
+                    counter_done = 0
                     for i in list:
                         if i['done'] == 0:
                             counter_done += 1
-                            print(counter_done)
                             if counter_done == user_choice:
                                 i['done'] = 1
                                 break
-        print('Hotovo')
+            break
+        print(color.GREEN + 'Úkol splněn!' + color.RESET)
     elif user_choice == 5:
         break
     else:
