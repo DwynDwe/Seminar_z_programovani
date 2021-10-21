@@ -1,11 +1,16 @@
 from colorama import Fore as color
 import time
+import random
 
 stats = {
     'health' : 5,
     'sanity' : 5,
     'money' : 100
 }
+
+world_parties = ['sever','s','jih','j','západ','z','zapad','východ','v','vychod']
+yes_no = ['ano','ne','a','n']
+end_station = ['podchod','p','konečná','k','konecna']
 
 def print_stats():
     print('zdraví: ' + str(stats['health']) + '\npříčetnost: ' + str(stats['sanity']) + '\npeníze: ' + str(stats['money']))
@@ -36,48 +41,87 @@ def train_station():
         near_train_station()
 
 def near_train_station():
-    decision = None
-    while decision == None:
+    while True:
         decision = input(color.YELLOW + 'Rušný místo. Spousta lidí se hrne přes sebe, ženou se na šaliny a trajfy. Co? Jo - trolejbusy. Bože.\nHlavas je prostě šíleně důležitý místo v Brně. Přes den se tu všechno děje a v noci, v noci vlastně taky. Tak kam teď? (sever, jih, západ, východ): ' + color.YELLOW).lower()
-        if decision == 'sever' or decision == 's':
+        if decision in world_parties:
+            break
+    if decision == 'sever' or decision == 's':
+        decision = None
+        pass
+    elif decision == 'jih' or decision == 'j':
+        decision = None
+        pass
+    elif decision == 'západ' or decision == 'z' or decision == 'zapad':
+        decision = None
+        pass
+    elif decision == 'východ' or decision == 'v' or decision == 'vychod':
+        while True:
+            decision = input(color.YELLOW + 'Nějaká konečná trolejbusu. A podchod. Kam teď? (podchod/konečná): ' + color.RESET).lower()
+            if decision in end_station:
+                break
+        if decision == 'podchod' or decision == 'p':
             decision = None
-            pass
-        elif decision == 'jih' or decision == 'j':
-            decision = None
-            pass
-        elif decision == 'západ' or decision == 'z' or decision == 'zapad':
-            decision = None
-            pass
-        elif decision == 'východ' or decision == 'v' or decision == 'vychod':
-            decision = None
-            while decision == None:
-                decision = input(color.YELLOW + 'Nějaká konečná trolejbusu. A podchod. Kam teď? (podchod/konečná): ' + color.RESET).lower()
-                if decision == 'podchod' or decision == 'p':
-                    decision = None
-                    print(color.YELLOW + 'Temný místo. Patrioti tomu říkaj Myší díra. Vede většinou na nástupiště emhádéčka. Občas se tam někdo ztratí... Tak jdem.' + color.RESET)
-                    time.sleep(5)
-                    while decision == None:
-                        decision = input(color.YELLOW + 'Hele, skořápky! Pojď, zahrajem si! (ano/ne): ' + color.RESET).lower()
-                        if decision == 'ano' or decision == 'a':
-                            decision = None
-                            while decision == None:
-                                decision = input(color.BLUE + 'Skořápkář: ' + color.RESET + 'Zdarec kábre. Hra stojí tři pětky. Pokud uhodneš, dostaneš zpět dvojnásobek. (ano/ne): ').lower()
-                                if decision == 'ano' or decision == 'a':
-                                    pass
-                                elif decision == 'ne' or decision == 'n':
-                                    pass
-                                else:
-                                    decision = None
-                        elif decision == 'ne' or decision == 'n':
-                            pass
+            print(color.YELLOW + 'Temný místo. Patrioti tomu říkaj Myší díra. Vede většinou na nástupiště emhádéčka. Občas se tam někdo ztratí... Tak jdem.' + color.RESET)
+            time.sleep(5)
+            while True:
+                decision = input(color.YELLOW + 'Hele, skořápky! Pojď, zahrajem si! (ano/ne): ' + color.RESET).lower()
+                if decision in yes_no:
+                    break
+            if decision == 'ano' or decision == 'a':
+                while True:
+                    decision = input(color.BLUE + 'Skořápkář: ' + color.RESET + 'Zdarec kábre. Hra stojí tři pětky. Pokud uhodneš, dostaneš zpět dvojnásobek. (ano/ne): ').lower()
+                    if decision in yes_no:
+                        break
+                while True:
+                    if decision == 'ano' or decision == 'a':
+                        if stats['money'] >= 30:
+                            print(color.BLUE + 'Skořápkář: ' + color.RESET + 'Fajn. Dám kuličku pod jeden z kelímků. Pokud uhodneš pod kterým je, dostaneš zpět dvojnásobek')
+                            time.sleep(5)
+                            print(color.YELLOW + 'Skořápkář vkládá kuličku a míchá kelímky' + color.RESET)
+                            i = 0
+                            while i <= 5:
+                                print('.',sep=' ',end='',flush=True)
+                                i += 1
+                                time.sleep(1)
+                            while True:
+                                decision = int(input('\n1▋  2▋  3▋\n' + color.BLUE + 'Skořápkář: ' + color.RESET + 'Který kelímek vybíráš? (1/2/3): '))
+                                if decision in range(1,4):
+                                    break
+                            if decision == random.randint(1,3):
+                                print(color.BLUE + 'Skořápkář: ' + color.RESET + 'Tak to jsem ještě nežral. DObrej tip!')
+                                stats['money'] += 30
+                                print_stats()
+                                time.sleep(5)
+                                while True:
+                                    decision = input(color.BLUE + 'Skořápkář: ' + color.RESET + 'Dáme ještě jednu hru? (ano/ne): ')
+                                    if decision in yes_no:
+                                        break
+                                break
+                            else:
+                                print(color.BLUE + 'Skořápkář: ' + color.RESET + 'Ha, blbej cajzle! Davaj!')
+                                stats['money'] -= 30
+                                print_stats()
+                                time.sleep(5)
+                                while True:
+                                    decision = input(color.BLUE + 'Skořápkář: ' + color.RESET + 'Dáme ještě jednu hru? (ano/ne): ')
+                                    if decision in yes_no:
+                                        break
+                                break
                         else:
-                            decision = None
-                elif decision == 'konečná' or decision == 'k' or decision == 'k':
-                    print(color.YELLOW + 'Hmm. Trolejbus číslo 31. Někam za Brno. To raději riskovat nebudeme, co?' + color.RESET)
-                    decision = None
-                else:
-                    decision = None
-        else:
-            decision = None
+                            print(color.BLUE + 'Skořápkář: ' + color.RESET + 'Sorry, tohle asi nezacáluješ. Nemáš dost bakulí.')
+                            break
+                    elif decision == 'ne' or decision == 'n':
+                        decision_from_cycle = 1
+                        break
+            if decision == 'ne' or decision == 'n' or decision_from_cycle == 1:
+                print(color.YELLOW + 'Ty moc neriskuješ, co? Pražáci... Pojď, jdem na šalinu. Podíváme se do centra.')
+                tram_to_centre()
+        elif decision == 'konečná' or decision == 'k' or decision == 'konecna':
+            print(color.YELLOW + 'Hmm. Trolejbus číslo 31. Někam za Brno. To raději riskovat nebudeme, co? Tady vede cesta zpět k nádru...' + color.RESET)
+            time.sleep(5)
+            near_train_station()
+
+def tram_to_centre():
+    pass
 
 near_train_station()
