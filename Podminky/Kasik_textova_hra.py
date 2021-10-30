@@ -46,14 +46,28 @@ def near_train_station():
         if decision in world_parties:
             break
     if decision == 'sever' or decision == 's':
-        decision = None
-        pass
+        print(color.YELLOW + 'Takže k šalině. Rovnou na věc. Pojeďme z toho drsnýho hlaváku přímo do štatlu - tam přežiješ dýl jak deset minut.' + color.RESET)
+        time.sleep(3)
+        tram_to_centre()
     elif decision == 'jih' or decision == 'j':
-        decision = None
-        pass
+        print(color.YELLOW + 'Vracet se na nádr? Jsi vyměkl, srabe? Teď už necouvneš. Hybaj na šalinu!' + color.RESET)
+        time.sleep(3)
+        tram_to_centre()
     elif decision == 'západ' or decision == 'z' or decision == 'zapad':
-        decision = None
-        pass
+        while True:
+            decision = input(color.YELLOW + 'Nový sady jsou zajímavá ulice. Takový rovný nic. Mezi hlavákem a zástávkou pod Petrovem fakt nic není. Nechceš jít alespoň na ten Petrov? (ano/ne): ' + color.RESET).lower()
+            if decision in yes_no:
+                break
+        if decision == 'ano' or decision == 'a':
+            petrov()
+        else:
+            print(color.YELLOW + 'Ach jo. Si fakt nudnej...' + color.RESET)
+            time.sleep(3)
+            print(color.YELLOW + 'Hele, jede dvanáctka. Nastup.' + color.RESET)
+            time.sleep (2)
+            print('Nuda. Nic nebezpečného. Psychika? Lepší.')
+            stats['sanity'] += 2
+            tram_to_faculty()
     elif decision == 'východ' or decision == 'v' or decision == 'vychod':
         while True:
             decision = input(color.YELLOW + 'Nějaká konečná trolejbusu. A podchod. Kam teď? (podchod/konečná): ' + color.RESET).lower()
@@ -109,6 +123,8 @@ def near_train_station():
                                 break
                         else:
                             print(color.BLUE + 'Skořápkář: ' + color.RESET + 'Sorry, tohle asi nezacáluješ. Nemáš dost bakulí.')
+                            stats['sanity'] -= 2
+                            print_stats()
                             break
                     elif decision == 'ne' or decision == 'n':
                         decision_from_cycle = 1
@@ -122,6 +138,12 @@ def near_train_station():
             near_train_station()
 
 def tram_to_centre():
+    pass
+
+def tram_to_faculty():
+    pass
+
+def petrov():
     pass
 
 near_train_station()
