@@ -1,8 +1,6 @@
 from colorama import Fore as color
-import time
-import random
+import time, random, threading
 from playsound import playsound
-import threading
 
 stats = {
     'health' : 5,
@@ -15,8 +13,9 @@ yes_no = ['ano','ne','a','n']
 end_station = ['podchod','p','konečná','k','konecna']
 petrov_decision = ['hlavák','hlavak','h','nové sady','nove sady','n']
 abcd = ['a','b','c','d']
-question_bank = ['První otázka. Který z uvedených geologických procesů je nejmladší?\na) udazování křídových sedimentů v České křídové tabuli\nb) usazování vápenců Českého krasu\nc) vyvrásnění Karpat\nd) vyvrásnění Krkonoš\nOdpověď (a/b/c/d): ', 'Druhá. Který z uvedených regionů se nenachází na území Evropské unie?\na) Baskicko\nb) Toskánsko\nc) Vojvodina\nd) Korutansko\nOdpověď (a/b/c/d): ', 'Třetí otázka. Ve kterém z uvedených měst bude 5. července nejdelší den?\na) Riga\nb) Vídeň\nc) Quito\nd) Montevideo\nOdpověď (a/b/c/d): ', 'Jaké je měřítko mapy, jestliže vzdálenost dvou měst, která ve skutečnosti činí 20 km, je na této mapě 4 cm?\na) 1 : 80 000\nb)1 : 200 000\nc) 1 : 500 000\nd) 1 : 800 000\nOdpověď (a/b/c/d): ', 'A poslední. Vyberte CHKO, ve které se nenachází přiřazený přírodní jev:\na) MOravský kras -> jeskyně\nb) Litovelské Pomoraví -> lužní les\nc) Broumovsko -> pískovcové skály\nd) Žďárské vrchy -> karová jezera\nOdpověď (a/b/c/d): ']
+question_bank = ['První otázka, jo. Který z uvedených geologických procesů je nejmladší?\na) udazování křídových sedimentů v České křídové tabuli\nb) usazování vápenců Českého krasu\nc) vyvrásnění Karpat\nd) vyvrásnění Krkonoš\nOdpověď (a/b/c/d): ', 'Druhá, jo. Který z uvedených regionů se nenachází na území Evropské unie?\na) Baskicko\nb) Toskánsko\nc) Vojvodina\nd) Korutansko\nOdpověď (a/b/c/d): ', 'Třetí otázka, jo. Ve kterém z uvedených měst bude 5. července nejdelší den?\na) Riga\nb) Vídeň\nc) Quito\nd) Montevideo\nOdpověď (a/b/c/d): ', 'Dál, jo. Jaké je měřítko mapy, jestliže vzdálenost dvou měst, která ve skutečnosti činí 20 km, je na této mapě 4 cm?\na) 1 : 80 000\nb) 1 : 200 000\nc) 1 : 500 000\nd) 1 : 800 000\nOdpověď (a/b/c/d): ', 'A poslední, jo. Vyberte CHKO, ve které se nenachází přiřazený přírodní jev:\na) MOravský kras -> jeskyně\nb) Litovelské Pomoraví -> lužní les\nc) Broumovsko -> pískovcové skály\nd) Žďárské vrchy -> karová jezera\nOdpověď (a/b/c/d): ']
 question_bank_answers = ['c', 'c', 'a', 'c', 'd']
+herber_reaction_positive, herber_reaction_negative = ['Fajn, to by šlo, jo.', 'Nejsi úplně blbej, jo.', 'Že by budoucí geograf?', 'Hmmm, dobrý.', 'Fajn, fajn!', 'Pěkně'], ['No to asi ne, jo.', 'Hehe, nene.', 'To byla jedna z jednodušších', 'Fakt chceš studovat geografii, jo?']
 kidnaping = False
 
 def print_stats():
@@ -256,17 +255,66 @@ def herber_quiz():
             else:
                 print('To není ani na výběr')
         if decision == question_bank_answers[count]:
-            print(color.BLUE + 'Brněnská napodobenina papeže: ' + color.RESET + 'Fajn! První správně, jo.')
+            print(color.BLUE + 'Brněnská napodobenina papeže: ' + color.RESET + random.choice(herber_reaction_positive))
             correct += 1
         else:
-            print(color.BLUE + 'Brněnská napodobenina papeže: ' + color.RESET + 'Tahle patřila k těm jednoduším, jo. No nic, jo, jdeme dál.')
+            print(color.BLUE + 'Brněnská napodobenina papeže: ' + color.RESET + random.choice(herber_reaction_negative))
         count += 1
+        time.sleep(3)
+        print('\n')
+    if correct >= 4:
+        if kidnaping == True:
+            gameover_herber_train()
+        else:
+            gamewin()
+    else:
+        if kidnaping == True:
+            gameover_herber_kill()
+        else:
+            gameover_herber_train()
 
 def gameover_crash():
     sound_thread = threading.Thread(target=gameover_sound)
+    sound_thread.daemon = True
     sound_thread.start()
 
 def gameover_sound():
     playsound('Podminky\\crash_gameover.mp3')
 
-herber_quiz()
+def gameover_herber_kill():
+    time.sleep(6)
+    gameover_crash()
+    print(color.BLUE + '\nBrněnská napodobenina papeže: ' + color.RESET + 'Nešťastné, jo. Nepatříš ani k těm chytřejším.')
+    stats['sanity'] = 0
+    time.sleep(3)
+    print_stats()
+    time.sleep(6)
+    print(color.BLUE + '\nBrněnská napodobenina papeže: ' + color.RESET + 'Ještě peníze prosím, jo.')
+    stats['money'] = 0
+    time.sleep(3)
+    print_stats()
+    time.sleep(6)
+    print(color.BLUE + '\nBrněnská napodobenina papeže: ' + color.RESET + 'Asi se rozloučíme, jo.\n')
+    time.sleep(6)
+    print(''.join(random.choice('*\\#@{}]Đđ_-') for character in range(1000)))
+    stats['health'] = 0
+    time.sleep(3)
+    print_stats()
+    time.sleep(6)
+    print(color.RED + '\n***GAME OVER***' + color.RESET)
+
+def gameover_herber_train():
+    time.sleep(5)
+    gameover_crash()
+    print(color.BLUE + '\nBrněnská napodobenina papeže: ' + color.RESET + 'Takový tu úplně nechceme, jo. Jeď prosím zpět do Prahy, než se ti něco stane.')
+    time.sleep(5)
+    print(color.RED + '\n***GAME OVER***' + color.RESET)
+
+def gamewin():
+    print('\n')
+    playsound('Podminky\\win_game.mp3')
+    print(color.YELLOW + 'Takže budoucí student! Gratuluju! Snad tě teď Brno už nesežere :)')
+    time.sleep(6)
+    print(color.GREEN + '\n+++VÍTĚŽSTVÍ+++' + color.RESET)
+
+gamewin()
