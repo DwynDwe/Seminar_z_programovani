@@ -1,6 +1,8 @@
 from colorama import Fore as color
 import time
 import random
+from playsound import playsound
+import threading
 
 stats = {
     'health' : 5,
@@ -11,6 +13,11 @@ stats = {
 world_parties = ['sever','s','jih','j','západ','z','zapad','východ','v','vychod']
 yes_no = ['ano','ne','a','n']
 end_station = ['podchod','p','konečná','k','konecna']
+petrov_decision = ['hlavák','hlavak','h','nové sady','nove sady','n']
+abcd = ['a','b','c','d']
+question_bank = ['První otázka. Který z uvedených geologických procesů je nejmladší?\na) udazování křídových sedimentů v České křídové tabuli\nb) usazování vápenců Českého krasu\nc) vyvrásnění Karpat\nd) vyvrásnění Krkonoš\nOdpověď (a/b/c/d): ', 'Druhá. Který z uvedených regionů se nenachází na území Evropské unie?\na) Baskicko\nb) Toskánsko\nc) Vojvodina\nd) Korutansko\nOdpověď (a/b/c/d): ', 'Třetí otázka. Ve kterém z uvedených měst bude 5. července nejdelší den?\na) Riga\nb) Vídeň\nc) Quito\nd) Montevideo\nOdpověď (a/b/c/d): ', 'Jaké je měřítko mapy, jestliže vzdálenost dvou měst, která ve skutečnosti činí 20 km, je na této mapě 4 cm?\na) 1 : 80 000\nb)1 : 200 000\nc) 1 : 500 000\nd) 1 : 800 000\nOdpověď (a/b/c/d): ', 'A poslední. Vyberte CHKO, ve které se nenachází přiřazený přírodní jev:\na) MOravský kras -> jeskyně\nb) Litovelské Pomoraví -> lužní les\nc) Broumovsko -> pískovcové skály\nd) Žďárské vrchy -> karová jezera\nOdpověď (a/b/c/d): ']
+question_bank_answers = ['c', 'c', 'a', 'c', 'd']
+kidnaping = False
 
 def print_stats():
     print('zdraví: ' + str(stats['health']) + '\npříčetnost: ' + str(stats['sanity']) + '\npeníze: ' + str(stats['money']))
@@ -20,7 +27,7 @@ def start():
     print('\n')
     if decision == 'ano' or decision == 'a':
         print(color.YELLOW + 'Výborně! Vydejme se na dobrodružství! Toto jsou tvoje statistiky:\n' + color.RESET + 'zdraví: ' + str(stats['health']) + '\npříčetnost: ' + str(stats['sanity']) + '\npeníze: ' + str(stats['money']))
-        print(color.YELLOW + 'Tyto statistiky jsou důležité pro tvé přežití. Nikdy se nesmí dostat na nulu. Nechceš přece, aby do tebe vrtal nějakej brněnskej felčar pazourkem. Každý úkol, který před tebou bude stát, ti při špatném vyřešení může ubrat některý z atributů. Tvé statistiky se objeví vždy, když dostaneš nějaké poškození (nebo za něco zaplatíš). Pokud se budeš muset rozhodnout, lze odpovědět jedním z textů v závorce. Lze použít i jen počáteční písmeno odpovědi. A teď vzhůru do Brna!\n' + color.RESET)
+        print(color.YELLOW + 'Tyto statistiky jsou důležité pro tvé přežití. Nikdy se nesmí dostat na nulu. Nechceš přece, aby do tebe vrtal nějakej brněnskej felčar pazourkem. Každý úkol, který před tebou bude stát, ti při špatném vyřešení může ubrat některý z atributů. Tvé statistiky se objeví vždy, když dostaneš nějaké poškození (nebo za něco zaplatíš). Pokud se budeš muset rozhodnout, lze odpovědět jedním z textů v závorce. Lze použít i jen počáteční písmeno odpovědi. Doporučuju mít zapnutý zvuk. A teď vzhůru do Brna!\n' + color.RESET)
         train_station()
     else:
         print(color.YELLOW + 'Srabe. Támhle ti jede écéčko do Prahy.' + color.RESET)
@@ -31,12 +38,13 @@ def train_station():
     decision = input(color.YELLOW + 'Moc nechápeš, co po tobě chce, co? Hele, natahuje ruku! To bude chtít asi prachy! Dáš mu dvacku? (ano/ne): ' + color.RESET).lower()
     if decision == 'ano' or decision == 'a':
         print(color.BLUE + 'Bezdomovec: ' + color.RESET + 'Díky šéfe! Máte dobrý srdéčko\n\n' + color.YELLOW + 'Tak to proběhlo celkem hladce. Honem před budovu. Vypadá to, že se k tobě ženou další!\n'+ color.RESET)
-        stats['money'] = stats['money'] - 20
+        stats['money'] -= 20
         print_stats()
         near_train_station()
     else:
         print(color.BLUE + 'Bezdomovec: ' + color.RESET + 'Bleehhh\n\n' + color.YELLOW + 'Hehe. To jsi asi nečekal. Být hned po výstupu nahozenej bezdomovcem. To chceš. Běž radši rychle ven, než se stane něco dalšího.' + color.RESET)
-        stats['sanity'] = stats['sanity'] - 2
+        stats['sanity'] -= 2
+        stats['health'] -= 1
         print_stats()
         near_train_station()
 
@@ -54,20 +62,7 @@ def near_train_station():
         time.sleep(3)
         tram_to_centre()
     elif decision == 'západ' or decision == 'z' or decision == 'zapad':
-        while True:
-            decision = input(color.YELLOW + 'Nový sady jsou zajímavá ulice. Takový rovný nic. Mezi hlavákem a zástávkou pod Petrovem fakt nic není. Nechceš jít alespoň na ten Petrov? (ano/ne): ' + color.RESET).lower()
-            if decision in yes_no:
-                break
-        if decision == 'ano' or decision == 'a':
-            petrov()
-        else:
-            print(color.YELLOW + 'Ach jo. Si fakt nudnej...' + color.RESET)
-            time.sleep(3)
-            print(color.YELLOW + 'Hele, jede dvanáctka. Nastup.' + color.RESET)
-            time.sleep (2)
-            print('Nuda. Nic nebezpečného. Psychika? Lepší.')
-            stats['sanity'] += 2
-            tram_to_faculty()
+        nove_sady()
     elif decision == 'východ' or decision == 'v' or decision == 'vychod':
         while True:
             decision = input(color.YELLOW + 'Nějaká konečná trolejbusu. A podchod. Kam teď? (podchod/konečná): ' + color.RESET).lower()
@@ -138,12 +133,140 @@ def near_train_station():
             near_train_station()
 
 def tram_to_centre():
-    pass
+    print(color.YELLOW + 'Šalina pomalu jede po Masaryčce. Vidíš všechny ty krásné obchůdky?' + color.RESET)
+    time.sleep(3)
+    print(color.YELLOW + 'Sakra! Revizor!' + color.RESET)
+    tram_inspector()
+    time.sleep(3)
+    print(color.YELLOW + 'To zas bylo něco. Ale tak nějaký peníze ještě máš. Přežít ve štatlu, když jsi blbec, není jednoduchý...' + color.RESET)
+    time.sleep(4)
+    print(color.YELLOW + 'CO TO ZAS JE? POVOZ?!' + color.RESET)
+    playsound('Podminky\\tram_ring.mp3')
+    print(''.join(random.choice('*\\#@{}]Đđ_-') for character in range(1000)))
+    print('\nTMA')
+    if stats['health'] < 5:
+        gameover_crash()
+    else:
+        herber_kidnaping()
+
 
 def tram_to_faculty():
-    pass
+    print(color.YELLOW + 'Kolem Petrova do hroznýho kopce. A ti šmirgláci tu jezdí jak magoři...' + color.RESET)
+    time.sleep(3)
+    print(color.YELLOW + 'Sakra. Revizor!' + color.RESET)
+    tram_inspector()
+    print(color.YELLOW + 'To zas bylo něco. Ale tak nějaký peníze ještě máš. Přežít ve štatlu, když jsi blbec, není jednoduchý...' + color.RESET)
+    time.sleep(5)
+    while True:
+        decision = input(color.YELLOW + 'Pokud chceš, aby tě Brno vzalo za svý, musíš se tu buď narodit, nebo tu začít studovat. Nechceš zkusit Přírodovědu? Zrovna kolem ní jedeme... (ano/ne): ' + color.RESET).lower()
+        if decision in yes_no:
+            break
+    if decision == 'ano' or decision == 'a':
+        print(color.YELLOW + 'Super! Tak dem.' + color.RESET)
+        time.sleep(3)
+        herber_quiz()
+    else:
+        print(color.YELLOW + 'Už mě nebaví ty tvoje výmluvy. Že to se ti nechce a támto se ti nechce! Hybaj!')
+        time.sleep(4)
+        herber_quiz()
+
 
 def petrov():
-    pass
+    print(color.YELLOW + 'Fajn místo. Drogy tu seženeš. A taky tu je fajn výhled.' + color.RESET)
+    time.sleep(3)
+    while True:
+        decision = input(color.YELLOW + 'Co se rozhlídnout kam dál? (ano/ne): ' + color.RESET).lower()
+        if decision in yes_no:
+            break
+    if decision == 'ano' or decision == 'a':
+        print(color.YELLOW + 'Je tu pekný výhled, co? Celý jih jako na dlani. NENAHÝBEJ SE!' + color.RESET)
+        time.sleep(5)
+        print(''.join(random.choice('*\\#@{}]Đđ_-') for character in range(1000)))
+        print('\nTMA')
+        gameover_crash()
+    else:
+        while True:
+            decision = input(color.YELLOW + 'Tak kam teď? (Hlavák/Nové sady): ' + color.RESET).lower()
+            if decision in petrov_decision:
+                break
+        if decision == 'hlavak' or decision == 'hlavák' or decision == 'h':
+            near_train_station()
+        else:
+            nove_sady()
 
-near_train_station()
+def nove_sady():
+    while True:
+            decision = input(color.YELLOW + 'Nový sady jsou zajímavá ulice. Takový rovný nic. Mezi hlavákem a zástávkou pod Petrovem fakt nic není. Nechceš jít alespoň na ten Petrov? (ano/ne): ' + color.RESET).lower()
+            if decision in yes_no:
+                break
+    if decision == 'ano' or decision == 'a':
+        petrov()
+    else:
+        print(color.YELLOW + 'Ach jo. Si fakt nudnej...' + color.RESET)
+        time.sleep(3)
+        print(color.YELLOW + 'Hele, jede dvanáctka. Nastup.' + color.RESET)
+        time.sleep (2)
+        print('Nuda. Nic nebezpečného. Psychika? Lepší.')
+        stats['sanity'] += 2
+        tram_to_faculty()       
+
+def tram_inspector():
+    while True:
+        decision = input(color.BLUE + 'Revizor: ' + color.RESET + 'Dobrý den, kontrola jízdenek. Máte jízdenku? (ano/ne): ').lower()
+        if decision in yes_no:
+            break
+    if decision == 'ano' or decision == 'a':
+        print(color.BLUE + 'Revizor: ' + color.RESET + 'A ukážete mi ji?')
+        time.sleep(3)
+        print(color.YELLOW + 'Opravdu si myslíš, že když budeš dělat, že ji hledáš, že tě pustí? Vím, že sis žádnou nekoupil.' + color.RESET)
+        time.sleep(3)
+        print(color.BLUE + 'Revizor: ' + color.RESET + 'Takže nemáte? To bude mastný.')
+        time.sleep(3)
+        print(color.YELLOW + 'Jseš blbej no. Nenapadlo mě, že pražáci si nekupují lístky na socku.' + color.RESET)   
+        time.sleep(3)
+        stats['money'] -= 70
+        print_stats()
+    else:
+        print(color.BLUE + 'Revizor: ' + color.RESET + 'Takže nemáte? To bude mastný.')
+        time.sleep(3)
+        print(color.YELLOW + 'Jseš blbej no. Nenapadlo mě, že pražáci si nekupují lístky na socku.' + color.RESET)   
+        time.sleep(3)
+        stats['money'] -= 70
+        print_stats()
+
+def herber_kidnaping():
+    global kidnaping
+    kidnaping = True
+    print(color.BLUE + 'Brněnská napodobenina papeže: ' + color.RESET + 'Těžký časo v Brně, jo? Máš štěstí, že žiješ, jo. Ale zadarmo nedělám, jo. Dám ti pět otázek, jo. Pokud, jo, na alespoň čtyři odpovíš správně, jo, tak tě pustím a raději pošlu zpátky do Prahy, jo? Pokud to nedáš, jo, tak tě dorazím, jo?')
+    herber_quiz()
+
+def herber_quiz():
+    time.sleep(3)
+    if kidnaping == False:
+        print(color.BLUE + 'Brněnská napodobenina papeže: ' + color.RESET + 'Vítejte, jo,  na naší fakultě! Z důvodů všech možných dopravních uzavírek v Brně, jo, je jediné smysluplné studium kartografie, jo. Jinak, jo, nevíme kudy kam. Dostanete pět otázek, jo. Pro přijetí, jo, je potřeba zodpovědět alespoň čtyři správně.\n')
+    else:
+        print(color.BLUE + 'Brněnská napodobenina papeže: ' + color.RESET + 'Nemáš vlastně na výběr, jo.\n')
+    time.sleep(6)
+    correct, count = 0, 0
+    for question in question_bank:
+        while True:
+            decision = input(color.BLUE + 'Brněnská napodobenina papeže: ' + color.RESET + question).lower()
+            if decision in abcd:
+                break
+            else:
+                print('To není ani na výběr')
+        if decision == question_bank_answers[count]:
+            print(color.BLUE + 'Brněnská napodobenina papeže: ' + color.RESET + 'Fajn! První správně, jo.')
+            correct += 1
+        else:
+            print(color.BLUE + 'Brněnská napodobenina papeže: ' + color.RESET + 'Tahle patřila k těm jednoduším, jo. No nic, jo, jdeme dál.')
+        count += 1
+
+def gameover_crash():
+    sound_thread = threading.Thread(target=gameover_sound)
+    sound_thread.start()
+
+def gameover_sound():
+    playsound('Podminky\\crash_gameover.mp3')
+
+herber_quiz()
