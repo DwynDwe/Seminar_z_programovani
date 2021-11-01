@@ -15,7 +15,7 @@ petrov_decision = ['hlavák','hlavak','h','nové sady','nove sady','n']
 abcd = ['a','b','c','d']
 question_bank = ['První otázka, jo. Který z uvedených geologických procesů je nejmladší?\na) udazování křídových sedimentů v České křídové tabuli\nb) usazování vápenců Českého krasu\nc) vyvrásnění Karpat\nd) vyvrásnění Krkonoš\nOdpověď (a/b/c/d): ', 'Druhá, jo. Který z uvedených regionů se nenachází na území Evropské unie?\na) Baskicko\nb) Toskánsko\nc) Vojvodina\nd) Korutansko\nOdpověď (a/b/c/d): ', 'Třetí otázka, jo. Ve kterém z uvedených měst bude 5. července nejdelší den?\na) Riga\nb) Vídeň\nc) Quito\nd) Montevideo\nOdpověď (a/b/c/d): ', 'Dál, jo. Jaké je měřítko mapy, jestliže vzdálenost dvou měst, která ve skutečnosti činí 20 km, je na této mapě 4 cm?\na) 1 : 80 000\nb) 1 : 200 000\nc) 1 : 500 000\nd) 1 : 800 000\nOdpověď (a/b/c/d): ', 'A poslední, jo. Vyberte CHKO, ve které se nenachází přiřazený přírodní jev:\na) MOravský kras -> jeskyně\nb) Litovelské Pomoraví -> lužní les\nc) Broumovsko -> pískovcové skály\nd) Žďárské vrchy -> karová jezera\nOdpověď (a/b/c/d): ']
 question_bank_answers = ['c', 'c', 'a', 'c', 'd']
-herber_reaction_positive, herber_reaction_negative = ['Fajn, to by šlo, jo.', 'Nejsi úplně blbej, jo.', 'Že by budoucí geograf?', 'Hmmm, dobrý.', 'Fajn, fajn!', 'Pěkně'], ['No to asi ne, jo.', 'Hehe, nene.', 'To byla jedna z jednodušších', 'Fakt chceš studovat geografii, jo?']
+herber_reaction_positive, herber_reaction_negative = ['Fajn, to by šlo, jo.', 'Nejsi úplně blbej, jo.', 'Že by budoucí geograf?', 'Hmmm, dobrý.', 'Fajn, fajn!', 'Pěkně'], ['No to asi ne, jo.', 'Hehe, nene.', 'To byla jedna z jednodušších, jo.', 'Fakt chceš přežít, jo?']
 kidnaping = False
 
 def print_stats():
@@ -36,7 +36,6 @@ def start():
         time.sleep(5)
         print(color.RED + '\n***GAME OVER***' + color.RESET)
         time.sleep(5)
-
 
 def train_station():
     print(color.YELLOW + 'Jedna z nejhezčích brněnských budov. Společně s břeclavským nádrem nejstarší v zemi. Ale koho zajímá Břeclav. Navíc - máme tu bezdomovce a ti prostě patří k našemu koloritu. Hele, jeden přichází!' + color.RESET)
@@ -151,8 +150,9 @@ def tram_to_centre():
     playsound('Podminky\\tram_ring.mp3')
     print(''.join(random.choice('*\\#@{}]Đđ_-') for character in range(1000)))
     print('\nTMA')
-    if stats['health'] < 5:
-        gameover_crash()
+    if stats['health'] <= 4:
+        stats['health'] = 0
+        gameover_stats()
     else:
         herber_kidnaping()
 
@@ -248,11 +248,11 @@ def herber_kidnaping():
     global kidnaping
     kidnaping = True
     time.sleep(5)
-    print(color.BLUE + 'Brněnská napodobenina papeže: ' + color.RESET + 'Těžký časo v Brně, jo? Máš štěstí, že žiješ, jo. Ale zadarmo nedělám, jo. Dám ti pět otázek, jo. Pokud, jo, na alespoň čtyři odpovíš správně, jo, tak tě pustím a raději pošlu zpátky do Prahy, jo? Pokud to nedáš, jo, tak tě dorazím, jo?')
+    print(color.BLUE + 'Brněnská napodobenina papeže: ' + color.RESET + 'Těžký časy v Brně, jo? Máš štěstí, že žiješ, jo. Ale zadarmo nedělám, jo. Dám ti pět otázek, jo. Pokud, jo, na alespoň čtyři odpovíš správně, jo, tak tě pustím a raději pošlu zpátky do Prahy, jo? Pokud to nedáš, jo, tak tě dorazím, jo?')
     herber_quiz()
 
 def herber_quiz():
-    time.sleep(3)
+    time.sleep(10)
     if kidnaping == False:
         print(color.BLUE + 'Brněnská napodobenina papeže: ' + color.RESET + 'Vítejte, jo,  na naší fakultě! Z důvodů všech možných dopravních uzavírek v Brně, jo, je jediné smysluplné studium kartografie, jo. Jinak, jo, nevíme kudy kam. Dostanete pět otázek, jo. Pro přijetí, jo, je potřeba zodpovědět alespoň čtyři správně.\n')
     else:
