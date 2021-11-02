@@ -76,6 +76,7 @@ def near_train_station():
                 break
         if decision == 'podchod' or decision == 'p':
             decision = None
+            decision_from_cycle = 0
             print(color.YELLOW + 'Temný místo. Patrioti tomu říkaj Myší díra. Vede většinou na nástupiště emhádéčka. Občas se tam někdo ztratí... Tak jdem.' + color.RESET)
             time.sleep(5)
             while True:
@@ -104,14 +105,13 @@ def near_train_station():
                                     break
                             if decision == random.randint(1,3):
                                 print(color.BLUE + 'Skořápkář: ' + color.RESET + 'Tak to jsem ještě nežral. DObrej tip!')
-                                stats['money'] += 30
+                                stats['money'] += 60
                                 print_stats()
                                 time.sleep(5)
                                 while True:
                                     decision = input(color.BLUE + 'Skořápkář: ' + color.RESET + 'Dáme ještě jednu hru? (ano/ne): ')
                                     if decision in yes_no:
                                         break
-                                break
                             else:
                                 print(color.BLUE + 'Skořápkář: ' + color.RESET + 'Ha, blbej cajzle! Davaj!')
                                 stats['money'] -= 30
@@ -121,7 +121,6 @@ def near_train_station():
                                     decision = input(color.BLUE + 'Skořápkář: ' + color.RESET + 'Dáme ještě jednu hru? (ano/ne): ')
                                     if decision in yes_no:
                                         break
-                                break
                         else:
                             print(color.BLUE + 'Skořápkář: ' + color.RESET + 'Sorry, tohle asi nezacáluješ. Nemáš dost bakulí.')
                             stats['sanity'] -= 2
@@ -132,6 +131,7 @@ def near_train_station():
                         break
             if decision == 'ne' or decision == 'n' or decision_from_cycle == 1:
                 print(color.YELLOW + 'Ty moc neriskuješ, co? Pražáci... Pojď, jdem na šalinu. Podíváme se do centra.')
+                time.sleep(5)
                 tram_to_centre()
         elif decision == 'konečná' or decision == 'k' or decision == 'konecna':
             print(color.YELLOW + 'Hmm. Trolejbus číslo 31. Někam za Brno. To raději riskovat nebudeme, co? Tady vede cesta zpět k nádru...' + color.RESET)
@@ -291,7 +291,7 @@ def gameover_crash():
     sound_thread.start()
 
 def gameover_sound():
-    playsound('Podminky\\crash_gameover.mp3')
+    playsound('Podminky\\crash_gameover.mp3', block=False)
 
 def gameover_herber_kill():
     time.sleep(6)
