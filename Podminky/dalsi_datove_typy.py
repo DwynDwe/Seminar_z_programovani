@@ -1,6 +1,6 @@
 """l = [1, 2, 3, 4, 5]
 print(l)
-
+ 
 l2 = ['pes', 'se', 'vez', 'domů', 20]
 print(l2)
 

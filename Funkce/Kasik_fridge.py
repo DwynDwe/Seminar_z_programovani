@@ -43,7 +43,7 @@ def add_foods(*args):
 
 def eat_food(name):
     eat_item = False
-    for dictionary in range(len(fridge)):
+    for dictionary in fridge:
         if fridge[dictionary]['name'] == name:
             del fridge[dictionary]
             eat_item = True
@@ -77,7 +77,7 @@ def get_count():
     """
 
 def get_average_price():
-    return get_price()/get_count()
+    return get_price()/get_count() 
     """
     Funkce vrati prumernou cenu vsech potravin v lednici. Pouzijte funkce get_price() a get_count().
     :return (float): vrati prumernou cenu vsech potravin v lednici

@@ -18,7 +18,7 @@ print(num)
 x = True
 print(type(x))
 x = 1
-print(type(x))
+print(type(x)) 
 
 y = False
 y = 0

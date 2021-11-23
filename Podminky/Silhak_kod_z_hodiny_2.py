@@ -48,7 +48,7 @@ l2 = [1, 'ahoj', 10, 1000.5, [0, 1], True]
 
 
 names = ['Honza', 'Martin', 'Hana']
-print(names)
+print(names) 
 # nový prvek na konec pole přidáme pomocí funkce append()
 names.append('Jirka')
 print(names)
