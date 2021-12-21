@@ -1,0 +1,127 @@
+Types of operations:
+1 -> Person search
+2 -> Add person
+3 -> Change adress
+4 -> Pension payout
+5 -> Pension raise by 5 %
+
+2021-12-20 19:10:39.050003
+Operation: 4
+Log event id: 1
+Person id: 1
+Status: OK
+
+2021-12-20 19:10:39.051000
+Operation: 4
+Log event id: 1
+Person id: 2
+Status: OK
+
+2021-12-20 19:10:39.051000
+Operation: 4
+Log event id: 1
+Person id: 3
+Status: OK
+
+2021-12-20 19:10:39.051000
+Operation: 4
+Log event id: 1
+Person id: 4
+Status: OK
+
+2021-12-20 19:10:39.051998
+Operation: 4
+Log event id: 1
+Person id: 5
+Status: FAILED
+
+2021-12-20 19:10:39.051998
+Operation: 4
+Log event id: 1
+Person id: 6
+Status: OK
+
+2021-12-20 19:10:39.055988
+Operation: 4
+Log event id: 1
+Person id: 7
+Status: OK
+
+2021-12-20 19:10:39.056984
+Operation: 4
+Log event id: 1
+Person id: 8
+Status: FAILED
+
+2021-12-20 19:10:39.056984
+Operation: 4
+Log event id: 1
+Person id: 9
+Status: OK
+
+2021-12-20 19:10:39.056984
+Operation: 4
+Log event id: 1
+Person id: 10
+Status: OK
+
+2021-12-20 19:10:39.056984
+Operation: 5
+Log event id: 1
+Person id: 1
+Status: OK
+
+2021-12-20 19:10:39.057982
+Operation: 5
+Log event id: 1
+Person id: 2
+Status: OK
+
+2021-12-20 19:10:39.057982
+Operation: 5
+Log event id: 1
+Person id: 3
+Status: OK
+
+2021-12-20 19:10:39.057982
+Operation: 5
+Log event id: 1
+Person id: 4
+Status: OK
+
+2021-12-20 19:10:39.057982
+Operation: 5
+Log event id: 1
+Person id: 5
+Status: FAILED
+
+2021-12-20 19:10:39.058979
+Operation: 5
+Log event id: 1
+Person id: 6
+Status: OK
+
+2021-12-20 19:10:39.058979
+Operation: 5
+Log event id: 1
+Person id: 7
+Status: OK
+
+2021-12-20 19:10:39.058979
+Operation: 5
+Log event id: 1
+Person id: 8
+Status: FAILED
+
+2021-12-20 19:10:39.058979
+Operation: 5
+Log event id: 1
+Person id: 9
+Status: OK
+
+2021-12-20 19:10:39.059977
+Operation: 5
+Log event id: 1
+Person id: 10
+Status: OK
+
